@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
 
+import { Button, ButtonToolbar } from 'react-bootstrap';
+
 function App() {
   return (
     <div className="App">
@@ -18,6 +20,17 @@ function App() {
         >
           Learn React
         </a>
+
+        <ButtonToolbar>
+          <Button variant="outline-primary">Primary</Button>
+          <Button variant="outline-secondary">Secondary</Button>
+          <Button variant="outline-success">Success</Button>
+          <Button variant="outline-warning">Warning</Button>
+          <Button variant="outline-danger">Danger</Button>
+          <Button variant="outline-info">Info</Button>
+          <Button variant="outline-light">Light</Button>
+          <Button variant="outline-dark">Dark</Button>
+        </ButtonToolbar>
       </header>
     </div>
   );
