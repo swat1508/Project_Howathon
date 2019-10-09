@@ -43,6 +43,7 @@ class Login extends Component {
         axios.post(`${serverUrl}/login`, {email: googleResponse.user.email, name: googleResponse.user.displayName}).then(res => {
           let returnedUser = googleResponse.user;
           window.localStorage.setItem('token', res.data.token);
+          localStorage.setItem('userId', res.data.id);
           this.props.dispatchUserDetails(
             {
               email: returnedUser.email,

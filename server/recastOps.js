@@ -1,5 +1,5 @@
-const recastai = require("./recast-ai")
-const appController = require('./controller/appController')
+import RecastApi from './recast-ai'
+import appController from './controller/appController'
 // import * as PersistentOps from "./persistent-ops";
 // import * as domManipulator from "./dom-ops";
 
@@ -29,11 +29,11 @@ class Recast {
         })
         .then((response) => {
             response.json().then((body) => {
-                const recastResponseProcesser = new recastai.RecastApi()
+                const recastResponseProcesser = new RecastApi()
                 const processedResponse = recastResponseProcesser.parseData(body, request.message)
                 appController.createMessage({body: {
                     message: processedResponse,
-                    userId: request.userId
+                    userId: request.id
                 }})
             });
         })

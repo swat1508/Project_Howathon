@@ -4,11 +4,11 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override'); //need for PUT/Edit request
-const recast = require('./recastOps')
+import Recast from './recastOps';
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = YAML.load('./swagger.yaml');
-const cors = require('cors')
+const cors = require('cors');
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
@@ -52,9 +52,13 @@ app.use(methodOverride('_method'));
 app.use(cors());
 
 app.post('/triggerRecastOps', (req, res) => {
-  const recastApi = new recast.Recast()
-  recastApi.getAndCallProcessIntent(req.body)
-})
+  const recastApi = new Recast();
+  recastApi.getAndCallProcessIntent(req.body).then((res) => {
+    console.log('Returned : ', res);
+    res.status(200);
+    res.json({success: true});
+  });
+});
 
 app.use('/api', isLoggedin, appRouter);
 app.use('/login', appRouter);

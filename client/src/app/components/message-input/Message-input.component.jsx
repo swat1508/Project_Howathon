@@ -10,6 +10,7 @@ import axios from 'axios'
 import {getUser} from '../../pages/login/selectors'
 
 const MessageInput = (props) => {
+    console.log('============', props.userInfo);
     return (
         <div className="message-input">
             <div className="wrap">
@@ -31,12 +32,12 @@ const updateChatHistory = (event, updateConversations, userInfo) => {
             message: input,
             bot: false,
             timeStamp: new Date().getTime(),
-            userId: userInfo && userInfo.email
+            userId: userInfo && userInfo.id || (localStorage.getItem('userId'))
         }
+        console.log(message)
         updateConversations(message)
         const host = window.location.hostname
         const port = 4001
-        console.log({input})
         axios
             .post(`http://${host}:${port}/triggerRecastOps`, message)
             .then((res) => {

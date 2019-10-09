@@ -12,11 +12,10 @@ import ChatHeader from "../chat-header/Chat-header.component";
 import Message from "../message/message.component";
 
 class ChatView extends Component {
-
     render() {
         return (
             <div className="content">
-                <ChatHeader />
+                <ChatHeader {...this.props} />
                 <div className="messages">
                     <ul>
                         {

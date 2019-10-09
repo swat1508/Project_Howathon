@@ -47,7 +47,7 @@ const appController = {
         const messageModel = new MessageModel({
           messageData: req.body.message,
           date: new Date(),
-          createrUser: mongoose.Types.ObjectId("5d9e434ce7b2835bb3444a8b")
+          createrUser: mongoose.Types.ObjectId(req.body.userId)
         });
         messageModel.save()
         .then(msg=> {

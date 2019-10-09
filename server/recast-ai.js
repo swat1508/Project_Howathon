@@ -1,6 +1,6 @@
 export default class RecastApi {
   parseData(response, outputCommand) {
-    let slug = response["results"]["intents"][0]["slug"];
+    let slug = response["results"] && response["results"]["intents"] && response["results"]["intents"][0] && response["results"]["intents"][0]["slug"];
     let userData = response["results"]["entities"];
     let possiblePiiKeywords = ["credit_card_expiry", "credit_card_number"];
     if (slug == "piiparse") {
