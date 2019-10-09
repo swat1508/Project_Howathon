@@ -1,29 +1,26 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
+import logo from './logo.svg';
+import './App.scss';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-             <header className="App-header">
-                
-                <h1 className="App-title">Welcome to ChatApp by EUNOIA </h1>
-            </header>
- 
-<div className="googleAuthFormCss">
-      Please Sign in below
-
-      <div className="google-login-button">
-          <a href="https://backend-xt-fsd.herokuapp.com/users/auth/google" class="button">
-            <button class="loginBtn loginBtn--google">Login with Google</button>
-            </a>
-        </div>
-
-
-      </div>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
 export default App;
