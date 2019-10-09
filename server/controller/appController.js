@@ -46,13 +46,17 @@ const appController = {
     try {
         const messageModel = new MessageModel({
           messageData: req.body.message,
-          date: new Date()
+          date: new Date(),
+          createrUser: mongoose.Types.ObjectId("5d9e434ce7b2835bb3444a8b")
         });
-        messageModel.createrUser = (req.body.userId);
-        messageModel.save((error, response) => {
-            res.set('Content-Type', 'application/json');
-            res.status(201).send(response);
-        });
+        messageModel.save()
+        .then(msg=> {
+          console.log("data saved ====================== ", msg)
+         })
+        .catch(err => {
+          console.log(err);
+          return
+        })
     } catch (error) {
       next(error);
     }

@@ -10,6 +10,7 @@ var recast = require('./recastOps');
 var YAML = require('yamljs');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = YAML.load('./swagger.yaml');
+var cors = require('cors');
 
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
@@ -49,16 +50,18 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 // CORS issue, allowed methods
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', frontendHost);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-    res.status(200).json({});
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', frontendHost);
+//   res.header('Access-Control-Allow-Credentials', true);
+//   res.header('Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   if (req.method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+//     res.status(200).json({});
+//   }
+//   next();
+// });
+app.use(cors());
 
 app.post('/triggerRecastOps', function (req, res) {
   var recastApi = new recast.Recast();

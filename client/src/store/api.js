@@ -33,3 +33,10 @@ export function fetchData() {
       return Promise.resolve(res.data);
     });
 }
+
+export function updateUserInfoApi(action) {
+  return axios.post(`${serverUrl}/login`, action)
+    .then((res) => {
+      return Promise.resolve(res.data);
+    });
+}

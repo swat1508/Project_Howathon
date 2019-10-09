@@ -45,11 +45,11 @@ class Login extends Component {
           this.props.dispatchUserDetails(
             {
               email: returnedUser.email,
-              displayName: returnedUser.displayName,
+              name: returnedUser.displayName,
               id: res.data.id
             }
           );
-        this.props.history.push("/home");
+          this.props.history.push("/home");
         })
       });
   }
