@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 require('../models/UserModel');
 const UserModel= mongoose.model('user');
 require('../models/MessageModel');
-const messageModel= mongoose.model('message');
+const MessageModel= mongoose.model('message');
 
 const appController = {
   addUser: (req, res, next) => {
@@ -26,7 +26,7 @@ const appController = {
 
   getConversationHistory: (req, res, next) => {
     try {
-      MessageModel.find({ 'message._id': req.query.userId }, (err, response) => {
+      messageModel.find({ 'message._id': req.query.userId }, (err, response) => {
         if (err) {
           throw err;
         } else {

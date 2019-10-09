@@ -6,7 +6,10 @@ const appController = require('../controller/appController');
 appRouter.route('/user')
   .post(appController.addUser);
 
-appRouter.route('/history')
+appRouter.route('/message')
+  .post(appController.createMessage);
+
+appRouter.route('/history:userId')
   .get(appController.getConversationHistory);
 
 module.exports = appRouter;
