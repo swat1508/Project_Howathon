@@ -25,7 +25,7 @@ class Login extends Component {
     });
   }
 
-  login() {
+  login = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebaseApp
       .auth()
@@ -39,7 +39,7 @@ class Login extends Component {
   render() {
     return (
       <div className="Login">
-        <header className="Login-header">
+        {/* <header className="Login-header">
           <div className="login-hero-img"></div>
           <div className="google-login-button">
                
@@ -51,7 +51,19 @@ class Login extends Component {
             </button>
                       
           </div>
-        </header>
+        </header> */}
+
+        <div className="left-side">
+          <div className="overlay"></div>
+        </div>
+        <div className="right-side">
+          <div className="login-wrapper">
+            <h2 className="login-text">Account Login</h2>
+            <button className="login-btn" onClick={this.login}>
+              Login with Google
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

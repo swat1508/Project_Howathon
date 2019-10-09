@@ -7,7 +7,7 @@ import "./App.scss";
 import store from "./store/store";
 import socketIOClient from "socket.io-client";
 import Router from "./app/router";
-import configureStore from './app/store'
+import configureStore from './app/store';
 
 class App extends Component {
   constructor() {
@@ -28,8 +28,8 @@ class App extends Component {
   }
 
   render() {
-    const store = configureStore()
-    return <Router store={store} />
+    const store = configureStore();
+    return <Router store={store} />;
   }
 }
 
