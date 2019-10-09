@@ -1,12 +1,14 @@
 import Immutable from 'immutable'
 
-import {HOME_UI_STATE_RECEIVED} from './actions'
+import {UPDATE_CONVERSATION} from './actions'
 
-const initialState = Immutable.Map()
+const initialState = Immutable.Map({
+    conversations: []
+})
 
 const homeReducer = (state = initialState, action) => {
     switch (action.type) {
-        case HOME_UI_STATE_RECEIVED:
+        case UPDATE_CONVERSATION:
             return state.mergeDeep(action.payload)
         default:
             return state

@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { firebaseConfig } from "./config";
 import { serverUrl } from './constant/constant';
-import firebase from "firebase";
-import { Provider } from "react-redux";
 import "./App.scss";
-import store from "./store/store";
 import socketIOClient from "socket.io-client";
 import Router from "./app/router";
 import configureStore from './app/store'

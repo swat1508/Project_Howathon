@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override'); //need for PUT/Edit request
-
+import {Recast} from './recastOps'
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 require('./models/UserModel');
@@ -59,6 +59,11 @@ app.get('/health', (req,res) => {
   res.status(200);
   res.json({data: 'Server helth is fine!!!'});
 });
+
+app.post('/triggerRecastOps', (req, res) => {
+  const recastApi = new Recast()
+  recastApi.getAndCallProcessIntent(req.body)
+})
 
 app.get('/persistUserConvo', (req, res) => {
   const newUser =  {

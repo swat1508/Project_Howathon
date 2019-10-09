@@ -1,6 +1,4 @@
 import React from 'react';
-
-import man from '../../../assets/man.png';
 import chatbot from '../../../assets/chat-bubble.png';
 
 const ChatHeader = () => {

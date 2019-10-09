@@ -31,7 +31,8 @@ class Login extends Component {
       .auth()
       .signInWithPopup(provider)
       .then(user => {
-        console.log("result aa gya =>", user);
+        // console.log("result aa gya =>", user);
+        // this.props.dispatchUserDetails(user)
         this.props.history.push("/home");
       });
   }

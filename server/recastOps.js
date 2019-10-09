@@ -1,23 +1,25 @@
-import * as PersistentOps from "./persistent-ops";
-import * as domManipulator from "./dom-ops";
+import RecastApi from "./recast-ai";
 
-const store = PersistentOps.store;
+// import * as PersistentOps from "./persistent-ops";
+// import * as domManipulator from "./dom-ops";
+
+// const store = PersistentOps.store;
 const $config = require("./config");
+const fetch = require('node-fetch')
 
-const dom = new domManipulator.DomManipulator();
+// const dom = new domManipulator.DomManipulator();
 
 export class Recast {
     constructor() {
         this.recastToken = $config.recasttoken;
-        this.requestUrl = "https://api.recast.ai/v2/request";
+        this.requestUrl = "https://api.cai.tools.sap/v2/request";;
     }
 
-    getAndCallProcessIntent(command, text) {
-        self = this;
-        const url = `${this.requestUrl}?text=${command}`;
-        let bodyRelevant = "";
-        let intent = "";
-        fetch(url, {
+    getAndCallProcessIntent(request, text) {
+        const url = `${this.requestUrl}?text=${request.message}`;
+
+        console.log('url passed in fetch is : ' , url);
+        return fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -25,30 +27,19 @@ export class Recast {
             },
             data: text,
         })
-            .then((response) => {
-                response.json().then((body) => {
-                    bodyRelevant = body.results;
-                    intent = bodyRelevant.intents[0] ? bodyRelevant.intents[0].slug : "";
-                    if (intent !== undefined && intent !== "") {
-                        if (!Object.keys($config.intentSlugToOperations).includes(intent)) {
-                            dom.showEmptyCommandMessage("Intent is either not Identified or is not supported, please try again with a different text.");
-                            return;
-                        }
-                        $(`#${$config.constants.hiddenIntentFieldId}`).val(intent);
-                        dom.displayIntentBox(intent);
-                        if (intent == "resethistory") {
-                            store.dispatch($config.intentSlugToOperations.resethistory.action);
-                            return;
-                        }
-                        dom.showWidget(intent);
-                        dom.populateRecastData(intent, bodyRelevant);
-                        store.dispatch($config.intentSlugToOperations.addquery.action);
-                    }
-                    return intent;
-                });
-            })
-            .catch((error) => {
-                console.error("Fetch Error =\n", error);
+        .then((response) => {
+            response.json().then((body) => {
+                const recastResponseProcesser = new RecastApi()
+                const processedResponse = recastResponseProcesser.parseData(body, request.message)
+                request.message = processedResponse
+                fetch('/message', {
+                    method: "POST",
+                    data: request.message,
+                })
             });
+        })
+        .catch((error) => {
+            console.error("Fetch Error =\n", error);
+        });
     }
 }
