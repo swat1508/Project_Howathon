@@ -91,6 +91,7 @@ const appController = {
             return res.status(200).json({
               message: 'Auth successful',
               token,
+              id: response._id,
             });
           })
         } else {
@@ -99,6 +100,7 @@ const appController = {
           return res.status(200).json({
             message: 'Auth successful',
             token,
+            id: user[0]._id,
           });
         }
       })

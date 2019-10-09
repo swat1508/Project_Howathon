@@ -90,7 +90,8 @@ var appController = {
           var token = jwt.sign({ name: response.name, userId: response._id }, 'This_is_jwt_secret', { expiresIn: '1h' });
           return res.status(200).json({
             message: 'Auth successful',
-            token: token
+            token: token,
+            id: response._id
           });
         });
       } else {
@@ -98,7 +99,8 @@ var appController = {
         var token = jwt.sign({ name: user[0].name, userId: user[0]._id }, 'This_is_jwt_secret', { expiresIn: '1h' });
         return res.status(200).json({
           message: 'Auth successful',
-          token: token
+          token: token,
+          id: user[0]._id
         });
       }
     }).catch(function (error) {
