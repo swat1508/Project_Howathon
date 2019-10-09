@@ -12,6 +12,8 @@ import firebase from "firebase";
 
 import {updateUserDetails} from './actions'
 import { firebaseConfig as config } from "./../../../config";
+import axios from "axios";
+import { serverUrl } from "../../../constant/constant";
 
 const firebaseApp = firebase.initializeApp(config);
 class Login extends Component {
@@ -37,9 +39,18 @@ class Login extends Component {
     firebaseApp
       .auth()
       .signInWithPopup(provider)
-      .then(user => {
-        this.props.dispatchUserDetails(user)
+      .then(googleResponse => {
+        axios.post(`${serverUrl}/login`, {email: googleResponse.user.email, name: googleResponse.user.displayName}).then(res => {
+          let returnedUser = googleResponse.user
+          this.props.dispatchUserDetails(
+            {
+              email: returnedUser.email,
+              displayName: returnedUser.displayName,
+              id: res.data.id
+            }
+          );
         this.props.history.push("/home");
+        })
       });
   }
 
