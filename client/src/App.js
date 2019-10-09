@@ -3,14 +3,13 @@ import { firebaseConfig } from "./config";
 import firebase from "firebase";
 import { Provider } from "react-redux";
 import "./App.scss";
-
 import store from "./store/store";
-
 import socketIOClient from "socket.io-client";
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 import { Button, ButtonToolbar } from "react-bootstrap";
-import Home from "./app/components/Home/Home";
+import Home from "./components/Home/Home";
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
   constructor() {
@@ -35,7 +34,7 @@ class App extends Component {
       <div className="App">
           <Provider store={store}>
             <Home />
-          </Provider>;
+          </Provider>
       </div>
     );
   }

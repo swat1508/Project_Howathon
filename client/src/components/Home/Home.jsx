@@ -2,7 +2,8 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import { requestApiData } from "../../../store/actions";
+import { requestApiData } from "../../store/actions";
+import ChatView from "../chat-view/chat-view.component";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -10,9 +11,11 @@ class Home extends React.Component {
   }
 
   render() {
-    return(<div>
-      { Object.keys(this.props.data).length !== 0  ? <div>{JSON.stringify( this.props.data )}</div> : <div>Loading...</div> }
-    </div>);
+    return (
+      <div>
+        { Object.keys(this.props.data).length !== 0  ? <div>{JSON.stringify( this.props.data )}</div> : <div>Loading...</div> }
+      </div>
+    );
   }
 }
 
