@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./login.scss";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+
 import socketIOClient from "socket.io-client";
 import { withRouter } from "react-router-dom";
 import firebase from "firebase";
@@ -60,6 +63,7 @@ class Login extends Component {
           <div className="login-wrapper">
             <h2 className="login-text">Account Login</h2>
             <button className="login-btn" onClick={this.login}>
+              <FontAwesomeIcon className="login-icon" icon={faSignInAlt} />
               Login with Google
             </button>
           </div>
