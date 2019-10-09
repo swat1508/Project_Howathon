@@ -8,13 +8,18 @@ const methodOverride = require('method-override'); //need for PUT/Edit request
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
+const {
+  databasePort,
+  serverPort
+} = require('./config/config');
+
 io.on('connection', function(socket){
   console.log('A user connected');
   socket.emit('FromAPI', 'Hello New User');
 });
 
-http.listen(4001, function(){
-  console.log('listening on *: 4001');
+http.listen(serverPort, function(){
+  console.log('listening on *: ', serverPort);
 });
 
 //Map Global Promise - get rid of warning
@@ -39,7 +44,7 @@ app.get('/', (req,res) => {
 
 //Database Config
 const db = require('./config/database');
-const port =  5000;
+const port =  databasePort;
 
 mongoose.connect(db.mongoURI, {useNewUrlParser: true }).then(() => {
   console.log('Mongo DB is Connected ...');

@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import { firebaseConfig } from "./config";
+import firebase from "firebase";
+import { Provider } from "react-redux";
 import "./App.scss";
-
+import store from "./store/store";
 import socketIOClient from "socket.io-client";
+
 import { Button, ButtonToolbar } from "react-bootstrap";
+import Home from "./components/Home/Home";
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
   constructor() {
@@ -26,24 +32,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <div class="login-hero-img"></div>
-
-          <div className="google-login-button">
-                      
-            <a
-              href="https://backend-xt-fsd.herokuapp.com/users/auth/google"
-              class="button"
-            >
-                         
-              <button class="loginBtn loginBtn--google">
-                Login with Google
-              </button>
-                          
-            </a>
-                    
-          </div>
-        </header>
+          <Provider store={store}>
+            <Home />
+          </Provider>
       </div>
     );
   }
