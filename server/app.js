@@ -52,6 +52,9 @@ app.get('/persistUserConvo', (req, res) => {
           } 
   new user_model(newUser).save()
 })
+app.get('/health', (req,res) => {    
+  res.send('Server helth is fine!!!');
+});
 
 //Database Config
 const db = require('./config/database');
