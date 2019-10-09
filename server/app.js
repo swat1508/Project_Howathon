@@ -7,8 +7,7 @@ const methodOverride = require('method-override'); //need for PUT/Edit request
 import {Recast} from './recastOps'
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-require('./models/UserModel');
-const user_model= mongoose.model('user');
+const appRouter = require('./routes/appRouter');
 
 const {
   databasePort,
@@ -54,34 +53,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/health', (req,res) => {
-  console.log('Server helth is fine!!!');  
-  res.status(200);
-  res.json({data: 'Server helth is fine!!!'});
-});
-
 app.post('/triggerRecastOps', (req, res) => {
   const recastApi = new Recast()
   recastApi.getAndCallProcessIntent(req.body)
 })
 
-app.get('/persistUserConvo', (req, res) => {
-  const newUser =  {
-              name : 'asdf',
-              email: 'asdf@asfd.com',
-              password :  'asdfasdf'
-          } 
-  new user_model(newUser).save()
-})
-app.get('/health', (req,res) => {
-  res.status(200);  
-  res.send({data: 'Server helth is fine!!!'});
-});
-
-app.get('/', (req,res) => {
-  console.log('at root---------');    
-    res.send('Home page');
-});
+app.use('/api', appRouter);
 
 //Database Config
 const db = require('./config/database');

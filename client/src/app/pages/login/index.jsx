@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./login.scss";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
+
 import socketIOClient from "socket.io-client";
 import { withRouter } from "react-router-dom";
 import firebase from "firebase";
@@ -25,7 +28,7 @@ class Login extends Component {
     });
   }
 
-  login() {
+  login = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebaseApp
       .auth()
@@ -40,7 +43,7 @@ class Login extends Component {
   render() {
     return (
       <div className="Login">
-        <header className="Login-header">
+        {/* <header className="Login-header">
           <div className="login-hero-img"></div>
           <div className="google-login-button">
                
@@ -52,7 +55,20 @@ class Login extends Component {
             </button>
                       
           </div>
-        </header>
+        </header> */}
+
+        <div className="left-side">
+          <div className="overlay"></div>
+        </div>
+        <div className="right-side">
+          <div className="login-wrapper">
+            <h2 className="login-text">Account Login</h2>
+            <button className="login-btn" onClick={this.login}>
+              <FontAwesomeIcon className="login-icon" icon={faSignInAlt} />
+              Login with Google
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
