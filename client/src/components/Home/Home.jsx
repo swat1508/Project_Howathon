@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { requestApiData } from "../../store/actions";
-import ChatView from "../chat-view/chat-view.component";
 
 class Home extends React.Component {
   componentDidMount() {
