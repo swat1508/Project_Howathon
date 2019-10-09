@@ -6,9 +6,9 @@ services:
     restart: always
     build: ./server
     ports:
-      - '4001'
-    labels:
-      - "traefik.frontend.rule=Host:localhost"
+      - '4001:4001'
+    # labels:
+    #   - "traefik.backendend.rule=Host:localhost"
     depends_on:
       - mongo
   mongo:
@@ -25,13 +25,13 @@ services:
       - '3000:3000'
     links:
       - server
-  reverse-proxy:
-    image: traefik:1.7
-    command: --api --docker
-    ports:
-      - 80:80
-      - 8080:8080
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  # reverse-proxy:
+  #   image: traefik:1.7
+  #   command: --api --docker
+  #   ports:
+  #     - 80:80
+  #     - 8080:8080
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
       
 # docker-compose up --build -d --scale server=5

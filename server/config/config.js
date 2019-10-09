@@ -8,9 +8,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = {
-    serverPort: process.env.SERVER_PORT,
-    databasePort: process.env.DATABASE_PORT,
-    remoteDbUri: process.env.REMOTE_DB_URI,
-    mongoDbUri: process.env.MONGO_DB_URI,
-    localhostDbUri: process.env.LOCALHOST_DB_URI
+    serverPort: '4001',
+    databasePort: '27017',
+    remoteDbUri: 'mongodb://swat1508:sinha1508@ds129045.mlab.com:29045/eunoia-howathon',
+    mongoDbUriDocker: 'mongodb://mongo:27017/eunoia-howathon',
+    localhostDbUri: 'mongodb://localhost/eunoia-howathon',
+    frontendHost: 'http://localhost:3000',
 };

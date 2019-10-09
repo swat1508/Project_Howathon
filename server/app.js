@@ -12,7 +12,8 @@ const user_model= mongoose.model('user');
 
 const {
   databasePort,
-  serverPort
+  serverPort,
+  frontendHost
 } = require('./config/config');
 
 io.on('connection', function(socket){
@@ -40,8 +41,23 @@ app.use(bodyParser.json());
 //Method-Override Middleware
 app.use(methodOverride('_method'));
 
-app.get('/', (req,res) => {    
-    res.send('Home page');
+// CORS issue, allowed methods
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', frontendHost);
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+    res.status(200).json({});
+  }
+  next();
+});
+
+app.get('/health', (req,res) => {
+  console.log('Server helth is fine!!!');  
+  res.status(200);
+  res.json({data: 'Server helth is fine!!!'});
 });
 
 app.get('/persistUserConvo', (req, res) => {
@@ -52,8 +68,14 @@ app.get('/persistUserConvo', (req, res) => {
           } 
   new user_model(newUser).save()
 })
-app.get('/health', (req,res) => {    
-  res.send('Server helth is fine!!!');
+app.get('/health', (req,res) => {
+  res.status(200);  
+  res.send({data: 'Server helth is fine!!!'});
+});
+
+app.get('/', (req,res) => {
+  console.log('at root---------');    
+    res.send('Home page');
 });
 
 //Database Config
