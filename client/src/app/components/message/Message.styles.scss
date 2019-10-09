@@ -1,0 +1,61 @@
+@import '../../../styles/_variables';
+
+li {
+    display: inline-block;
+    clear: both;
+    float: left;
+    margin: 15px 15px 5px 15px;
+    width: calc(100% - 25px);
+    font-size: 0.9em;
+
+    &:nth-last-child(1) {
+        margin-bottom: 20px;
+    }
+    
+    &.sent {
+        float: left;
+        margin-left: -25px;
+
+        img {
+            margin: 6px 8px 0 0;
+        }
+
+        p {
+            float: left;
+            background: $color-grey-5;
+            color: $color-white-5;
+            text-align: left;
+        }
+    }
+
+    &.replies {
+        img {
+            float: right;
+            margin: 6px 0 0 8px;
+        }
+
+        p {
+            text-align: right;
+            background: $color-white-5;
+            float: right;
+        }
+    }
+
+    img {
+        width: 22px;
+        border-radius: 50%;
+        float: left;
+    }
+
+    p {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 205px;
+        line-height: 130%;
+    }
+
+    p {
+        max-width: 300px;
+    }
+}

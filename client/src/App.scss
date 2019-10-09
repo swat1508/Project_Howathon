@@ -1,5 +1,8 @@
+@import './styles/variables';
+
 .App {
   text-align: center;
+  background: $color-blue-3;
 }
 
 .login-hero-img {
