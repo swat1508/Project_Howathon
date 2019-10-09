@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 require('../models/UserModel');
 const UserModel= mongoose.model('user');
 require('../models/MessageModel');
@@ -73,6 +74,41 @@ const appController = {
       next(error);
     }
   },
+
+  login: (req, res, next) => {
+    UserModel.find({ email: req.body.email })
+      .exec()
+      .then((user) => {
+        if (user.length < 1) {
+          
+          const userModel = new UserModel({
+            name: req.body.name,
+            email: req.body.email,
+            date: new Date(),
+          });
+          userModel.save((error, response) => {
+            const token = jwt.sign({ name: response.name, userId: response._id }, 'This_is_jwt_secret', { expiresIn: '1h' });
+            return res.status(200).json({
+              message: 'Auth successful',
+              token,
+            });
+          })
+        } else {
+          /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+          const token = jwt.sign({ name: user[0].name, userId: user[0]._id }, 'This_is_jwt_secret', { expiresIn: '1h' });
+          return res.status(200).json({
+            message: 'Auth successful',
+            token,
+          });
+        }
+      })
+      .catch((error) => {
+        res.status(401).json({
+          message: 'Auth failed',
+        });
+        next(error);
+      });
+  }
 
 }
 

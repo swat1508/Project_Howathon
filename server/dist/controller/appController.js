@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
 require('../models/UserModel');
 var UserModel = mongoose.model('user');
 require('../models/MessageModel');
@@ -74,6 +75,38 @@ var appController = {
     } catch (error) {
       next(error);
     }
+  },
+
+  login: function login(req, res, next) {
+    UserModel.find({ email: req.body.email }).exec().then(function (user) {
+      if (user.length < 1) {
+
+        var userModel = new UserModel({
+          name: req.body.name,
+          email: req.body.email,
+          date: new Date()
+        });
+        userModel.save(function (error, response) {
+          var token = jwt.sign({ name: response.name, userId: response._id }, 'This_is_jwt_secret', { expiresIn: '1h' });
+          return res.status(200).json({
+            message: 'Auth successful',
+            token: token
+          });
+        });
+      } else {
+        /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+        var token = jwt.sign({ name: user[0].name, userId: user[0]._id }, 'This_is_jwt_secret', { expiresIn: '1h' });
+        return res.status(200).json({
+          message: 'Auth successful',
+          token: token
+        });
+      }
+    }).catch(function (error) {
+      res.status(401).json({
+        message: 'Auth failed'
+      });
+      next(error);
+    });
   }
 
 };

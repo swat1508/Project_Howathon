@@ -1,5 +1,5 @@
-import RecastApi from "./recast-ai";
-import appController from './controller/appController'
+const recastai = require("./recast-ai")
+const appController = require('./controller/appController')
 // import * as PersistentOps from "./persistent-ops";
 // import * as domManipulator from "./dom-ops";
 
@@ -9,7 +9,7 @@ const fetch = require('node-fetch')
 
 // const dom = new domManipulator.DomManipulator();
 
-export class Recast {
+class Recast {
     constructor() {
         this.recastToken = $config.recasttoken;
         this.requestUrl = "https://api.cai.tools.sap/v2/request";;
@@ -29,7 +29,7 @@ export class Recast {
         })
         .then((response) => {
             response.json().then((body) => {
-                const recastResponseProcesser = new RecastApi()
+                const recastResponseProcesser = new recastai.RecastApi()
                 const processedResponse = recastResponseProcesser.parseData(body, request.message)
                 appController.createMessage({body: {
                     message: processedResponse,
@@ -42,3 +42,5 @@ export class Recast {
         });
     }
 }
+
+export default Recast;

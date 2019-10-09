@@ -1,14 +1,12 @@
 'use strict';
 
-var _recastOps = require('./recastOps');
-
 var express = require('express');
 var exphbs = require('express-handlebars'); //exphbs - expresshandlebars
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override'); //need for PUT/Edit request
-
+var recast = require('./recastOps');
 var YAML = require('yamljs');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = YAML.load('./swagger.yaml');
@@ -16,6 +14,7 @@ var swaggerDocument = YAML.load('./swagger.yaml');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var appRouter = require('./routes/appRouter');
+var isLoggedin = require('./auth/auth');
 
 var _require = require('./config/config'),
     databasePort = _require.databasePort,
@@ -62,11 +61,12 @@ app.use(function (req, res, next) {
 });
 
 app.post('/triggerRecastOps', function (req, res) {
-  var recastApi = new _recastOps.Recast();
+  var recastApi = new recast.Recast();
   recastApi.getAndCallProcessIntent(req.body);
 });
 
-app.use('/api', appRouter);
+app.use('/api', isLoggedin, appRouter);
+app.use('/login', appRouter);
 
 //Database Config
 var db = require('./config/database');
@@ -74,9 +74,9 @@ var port = databasePort;
 
 mongoose.connect(db.mongoURI, { useNewUrlParser: true }).then(function () {
   console.log('Mongo DB is Connected ...');
-  app.listen(port, function () {
-    console.log('Server started on port ' + port + ' ');
-  });
+  // app.listen(port , () => {
+  //   console.log(`Server started on port ${port} `);
+  // });
 }).catch(function (err) {
   return console.log(err);
 });
