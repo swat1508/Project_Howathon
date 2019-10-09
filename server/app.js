@@ -9,6 +9,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 require('./models/UserModel');
 const user_model= mongoose.model('user');
+const appRouter = require('./routes/appRouter');
 
 const {
   databasePort,
@@ -54,29 +55,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/health', (req,res) => {
-  console.log('Server helth is fine!!!');  
-  res.status(200);
-  res.json({data: 'Server helth is fine!!!'});
-});
-
-app.get('/persistUserConvo', (req, res) => {
-  const newUser =  {
-              name : 'asdf',
-              email: 'asdf@asfd.com',
-              password :  'asdfasdf'
-          } 
-  new user_model(newUser).save()
-})
-app.get('/health', (req,res) => {
-  res.status(200);  
-  res.send({data: 'Server helth is fine!!!'});
-});
-
-app.get('/', (req,res) => {
-  console.log('at root---------');    
-    res.send('Home page');
-});
+app.use('/api', appRouter);
 
 //Database Config
 const db = require('./config/database');
@@ -84,8 +63,8 @@ const port =  databasePort;
 
 mongoose.connect(db.mongoURI, {useNewUrlParser: true }).then(() => {
   console.log('Mongo DB is Connected ...');
-  app.listen(port , () => {
-    console.log(`Server started on port ${port} `);
-  });
+  // app.listen(port , () => {
+  //   console.log(`Server started on port ${port} `);
+  // });
 }).catch(err => console.log(err));
       

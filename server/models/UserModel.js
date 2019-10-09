@@ -11,14 +11,10 @@ const UserSchema = new Schema({
         type     : String,
         required : true
     },
-    password : {
-        type     : String,
-        required : true
-    },
     date : {
         type     : Date,
-        default: Date.now
+        default: Date.now()
     }
 });
     
-mongoose.model('user', UserSchema); //myUserModel will be name of collection in DB 
+module.exports = mongoose.model('user', UserSchema); //myUserModel will be name of collection in DB 
