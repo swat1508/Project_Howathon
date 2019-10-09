@@ -7,6 +7,8 @@ const methodOverride = require('method-override'); //need for PUT/Edit request
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+require('./models/UserModel');
+const user_model= mongoose.model('user');
 
 const {
   databasePort,
@@ -42,6 +44,14 @@ app.get('/', (req,res) => {
     res.send('Home page');
 });
 
+app.get('/persistUserConvo', (req, res) => {
+  const newUser =  {
+              name : 'asdf',
+              email: 'asdf@asfd.com',
+              password :  'asdfasdf'
+          } 
+  new user_model(newUser).save()
+})
 app.get('/health', (req,res) => {    
   res.send('Server helth is fine!!!');
 });
