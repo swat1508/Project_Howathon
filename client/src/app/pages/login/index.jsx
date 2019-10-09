@@ -3,12 +3,14 @@ import "./login.scss";
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import { withRouter } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
-
 import socketIOClient from "socket.io-client";
-import { withRouter } from "react-router-dom";
 import firebase from "firebase";
+
+import {updateUserDetails} from './actions'
 import { firebaseConfig as config } from "./../../../config";
 
 const firebaseApp = firebase.initializeApp(config);
