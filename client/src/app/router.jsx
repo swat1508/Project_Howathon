@@ -13,9 +13,9 @@ class Router extends React.Component {
     constructor() {
         super();
 
-        this.state = {
-            loggedIn: true
-        };
+        // this.state = {
+        //     loggedIn: false
+        // };
     }
 
     render() {
@@ -26,21 +26,21 @@ class Router extends React.Component {
                 <BrowserRouter>
                     <Switch>
                         <Route exact path="/login" render={() => (
-                            this.state.loggedIn ? (
+                            window.localStorage.getItem('token') ? (
                                 <Redirect to="/home"/>
                             ) : (
                                 <Login />
                             )
                             )}/>
                         <Route exact path="/home" render={() => (
-                            this.state.loggedIn ? (
+                            window.localStorage.getItem('token') ? (
                                 <Home />
                             ) : (
                                 <Redirect to="/login" />
                             )
                             )}/>
                         <Route exact path="/" render={() => (
-                            this.state.loggedIn ? (
+                            window.localStorage.getItem('token') ? (
                                 <Redirect to="/"/>
                             ) : (
                                 <Login />

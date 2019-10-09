@@ -41,7 +41,8 @@ class Login extends Component {
       .signInWithPopup(provider)
       .then(googleResponse => {
         axios.post(`${serverUrl}/login`, {email: googleResponse.user.email, name: googleResponse.user.displayName}).then(res => {
-          let returnedUser = googleResponse.user
+          let returnedUser = googleResponse.user;
+          window.localStorage.setItem('token', res.data.token);
           this.props.dispatchUserDetails(
             {
               email: returnedUser.email,
