@@ -46,7 +46,7 @@ var Recast = function () {
                     var processedResponse = recastResponseProcesser.parseData(body, request.message);
                     appController.createMessage({ body: {
                             message: processedResponse,
-                            userId: 'asdfjasdf'
+                            userId: request.userId
                         } });
                 });
             }).catch(function (error) {

@@ -38,7 +38,11 @@ class Login extends Component {
       .auth()
       .signInWithPopup(provider)
       .then(user => {
-        this.props.dispatchUserDetails(user)
+        this.props.dispatchUserDetails(user && user.user && {
+          email: user.user.email,
+          name: user.user.displayName,
+          emailVerified: user.user.emailVerified
+        })
         this.props.history.push("/home");
       });
   }
