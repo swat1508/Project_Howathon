@@ -11,6 +11,10 @@ var _recastAi = require("./recast-ai");
 
 var _recastAi2 = _interopRequireDefault(_recastAi);
 
+var _appController = require("./controller/appController");
+
+var _appController2 = _interopRequireDefault(_appController);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,9 +39,7 @@ var Recast = exports.Recast = function () {
     _createClass(Recast, [{
         key: "getAndCallProcessIntent",
         value: function getAndCallProcessIntent(request, text) {
-            var url = this.requestUrl + "?text=" + request.input;
-            var bodyRelevant = "";
-            var intent = "";
+            var url = this.requestUrl + "?text=" + request.message;
 
             console.log('url passed in fetch is : ', url);
             return fetch(url, {
@@ -50,14 +52,11 @@ var Recast = exports.Recast = function () {
             }).then(function (response) {
                 response.json().then(function (body) {
                     var recastResponseProcesser = new _recastAi2.default();
-                    var processedResponse = recastResponseProcesser.parseData(body, request.input);
-                    // bodyRelevant = body.results;
-                    // intent = bodyRelevant.intents[0] ? bodyRelevant.intents[0].slug : "";
-                    // console.log(bodyRelevant)
-                    // if (intent !== undefined && intent === "piiparse") {
-                    //     const entities = bodyRelevant.entities
-                    //     if ()
-                    // }
+                    var processedResponse = recastResponseProcesser.parseData(body, request.message);
+                    _appController2.default.createMessage({ body: {
+                            message: processedResponse,
+                            userId: 'asdfjasdf'
+                        } });
                 });
             }).catch(function (error) {
                 console.error("Fetch Error =\n", error);

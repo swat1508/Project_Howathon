@@ -9,15 +9,20 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override'); //need for PUT/Edit request
 
+var YAML = require('yamljs');
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = YAML.load('./swagger.yaml');
+
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
-require('./models/UserModel');
-var user_model = mongoose.model('user');
+var appRouter = require('./routes/appRouter');
 
 var _require = require('./config/config'),
     databasePort = _require.databasePort,
     serverPort = _require.serverPort,
     frontendHost = _require.frontendHost;
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 io.on('connection', function (socket) {
   console.log('A user connected');
@@ -56,37 +61,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/health', function (req, res) {
-  console.log('Server helth is fine!!!');
-  res.status(200);
-  res.json({ data: 'Server helth is fine!!!' });
-});
-
 app.post('/triggerRecastOps', function (req, res) {
   var recastApi = new _recastOps.Recast();
-  recastApi.getAndCallProcessIntent(req.body).then(function (response) {
-    res.status(200);
-    res.json(response);
-  });
+  recastApi.getAndCallProcessIntent(req.body);
 });
 
-app.get('/persistUserConvo', function (req, res) {
-  var newUser = {
-    name: 'asdf',
-    email: 'asdf@asfd.com',
-    password: 'asdfasdf'
-  };
-  new user_model(newUser).save();
-});
-app.get('/health', function (req, res) {
-  res.status(200);
-  res.send({ data: 'Server helth is fine!!!' });
-});
-
-app.get('/', function (req, res) {
-  console.log('at root---------');
-  res.send('Home page');
-});
+app.use('/api', appRouter);
 
 //Database Config
 var db = require('./config/database');

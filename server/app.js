@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override'); //need for PUT/Edit request
 import {Recast} from './recastOps'
+const YAML = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const appRouter = require('./routes/appRouter');
@@ -14,6 +18,8 @@ const {
   serverPort,
   frontendHost
 } = require('./config/config');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 io.on('connection', function(socket){
   console.log('A user connected');

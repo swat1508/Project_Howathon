@@ -28,6 +28,7 @@ var RecastApi = function () {
         }
         console.log("outputCommand", outputCommand);
       }
+      return outputCommand;
     }
   }]);
 

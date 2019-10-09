@@ -14,5 +14,5 @@ module.exports = {
     // mongoDbUriDocker: 'mongodb://mongo:27017/eunoia-howathon',
     mongoDbUriDocker: 'mongodb://localhost:27017/eunoia-howathon',
     localhostDbUri: 'mongodb://localhost/eunoia-howathon',
-    frontendHost: 'http://localhost:3000',
+    frontendHost: 'http://localhost:3000'
 };

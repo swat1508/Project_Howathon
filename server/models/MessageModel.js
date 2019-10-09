@@ -11,9 +11,7 @@ const MessageSchema = new Schema({
           type     : Date,
           default: Date.now()
       },
-    createrUser: [
-      {type: {type: Schema.Types.ObjectId, ref: 'user'}}
-    ]
+    createrUser: {type: Schema.Types.ObjectId, ref: 'user'}
 });
     
 mongoose.model('message', MessageSchema);

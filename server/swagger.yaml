@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Eunoia API Docs
+  description: API documentation for PII Data Anonymization in Howathon 2019, Publicis Sapient, Bangalore
+  version: 0.1.0
+servers:
+  - url: http://ec2-52-90-159-146.compute-1.amazonaws.com:4001/
+    description: EC2 instance production server, Main (production) server
+  - url: http://localhost:4001/
+    description: Local Server, Local Development server for testing
+paths:
+  /api/user:
+    post:
+      summary: Add a single user
+      description: Once user in logged in using Google OAuth for first, use this API endpoing to create a user
+      requestBody:
+        description: Create user request body object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Doe
+                email:
+                  type: string
+                  example: john.doe@email.com
+      responses:
+        '200':
+          description: Created user object
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  date:
+                    type: date-time
+                    example: 2019-10-09T18:02:28.271Z
+                  _id:
+                    type: string
+                    example: 5d9e1bfc2b063e2a519dba48
+                  name:
+                    type: string
+                    example: John Doe
+                  email:
+                    type: string
+                    example: john.doe@email.com
+                  __v:
+                    type: integer
+                    example: 1
+  /api/message:
+    post:
+      summary: Create new message from user
+      description: Create new message API
+      requestBody:
+        description: Create new message request body object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: New User Message
+                userId:
+                  type: string
+                  example: 5d9e1bfc2b063e2a519dba48
+      responses:
+        '200':
+          description: Created message object
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  date:
+                    type: date-time
+                    example: 2019-10-09T18:02:28.271Z
+                  _id:
+                    type: string
+                    example: 5d9e1bfc2b063e2a519dba48
+                  messageData:
+                    type: string
+                    example: New User Message
+                  createrUser:
+                    type: string
+                    example: 5d9e1bfc2b063e2a519dba48
+                  __v:
+                    type: integer
+                    example: 1
+  /api/user/{id}:
+    get:
+      summary: Get user details using specific userID
+      description: Get User Details using userID
+      responses:
+        '200':
+          description: Created message object
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  date:
+                    type: date-time
+                    example: 2019-10-09T18:02:28.271Z
+                  _id:
+                    type: string
+                    example: 5d9e1bfc2b063e2a519dba48
+                  name:
+                    type: string
+                    example: John Doe
+                  email:
+                    type: string
+                    example: john.doe@email.com
+                  __v:
+                    type: integer
+                    example: 1

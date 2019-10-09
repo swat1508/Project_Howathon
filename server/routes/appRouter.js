@@ -9,7 +9,11 @@ appRouter.route('/user')
 appRouter.route('/message')
   .post(appController.createMessage);
 
-appRouter.route('/history:userId')
+appRouter.route('/history/:userId')
   .get(appController.getConversationHistory);
+
+appRouter.route('/user/:userId')
+  .get(appController.getUserByUserId);
+
 
 module.exports = appRouter;
