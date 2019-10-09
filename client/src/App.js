@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import { firebaseConfig } from "./config";
+import firebase from "firebase";
 import "./App.scss";
 
 import socketIOClient from "socket.io-client";
-import { Button, ButtonToolbar } from "react-bootstrap";
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
   constructor() {
