@@ -6,7 +6,7 @@ services:
     restart: always
     build: ./server
     ports:
-      - '5000'
+      - '4001'
     labels:
       - "traefik.frontend.rule=Host:localhost"
     depends_on:

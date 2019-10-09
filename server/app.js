@@ -42,6 +42,10 @@ app.get('/', (req,res) => {
     res.send('Home page');
 });
 
+app.get('/health', (req,res) => {    
+  res.send('Server helth is fine!!!');
+});
+
 //Database Config
 const db = require('./config/database');
 const port =  databasePort;
