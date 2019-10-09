@@ -33,7 +33,7 @@ export class Recast {
                 const processedResponse = recastResponseProcesser.parseData(body, request.message)
                 appController.createMessage({body: {
                     message: processedResponse,
-                    userId: 'asdfjasdf'
+                    userId: request.userId
                 }})
             });
         })
