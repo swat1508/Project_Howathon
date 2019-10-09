@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import "./login.scss";
 
-import socketIOClient from "socket.io-client";
-import { Button, ButtonToolbar } from "react-bootstrap";
+import socketIOClient from "socket.io-client"
+import {withRouter} from 'react-router-dom'
+import firebase from 'firebase'
+import {firebaseConfig as config} from './../../../config'
 
+const firebaseApp = firebase.initializeApp(config) 
 class Login extends Component {
   constructor() {
     super();
@@ -23,7 +26,11 @@ class Login extends Component {
   }
 
   login() {
-    console.log("-------------- Logging IN")
+    var provider = new firebase.auth.GoogleAuthProvider()
+    firebaseApp.auth().signInWithPopup(provider).then((user) => {
+      console.log("result aa gya =>", user) 
+      this.props.history.push('/home')
+    })
   }
 
   render() {
@@ -33,10 +40,10 @@ class Login extends Component {
           <div className="login-hero-img"></div>
           <div className="google-login-button">
             <a
-              href="https://backend-xt-fsd.herokuapp.com/users/auth/google"
+              // href="https://backend-xt-fsd.herokuapp.com/users/auth/google"
               className="button"
             >    
-              <button className="loginBtn loginBtn--google" href="/home">
+              <button className="loginBtn loginBtn--google" onClick={this.login.bind(this)}>
                 Login with Google
               </button>     
             </a>
@@ -48,4 +55,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login)

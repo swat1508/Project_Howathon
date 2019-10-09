@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import { firebaseConfig } from "./config";
-import firebase from "firebase";
-import { Provider } from "react-redux";
-import "./App.scss";
-import store from "./store/store";
 import socketIOClient from "socket.io-client";
-
-import { Button, ButtonToolbar } from "react-bootstrap";
-import Home from "./components/Home/Home";
-
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+import Router from "./app/router";
+import configureStore from './app/store'
 
 class App extends Component {
   constructor() {
@@ -30,13 +22,8 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-          <Provider store={store}>
-            <Home />
-          </Provider>
-      </div>
-    );
+    const store = configureStore()
+    return <Router store={store} />
   }
 }
 

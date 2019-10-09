@@ -13,22 +13,22 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        const {initializeHome} = this.props
-        initializeHome()
+        const {initializeHomeDispatcher} = this.props
+        // initializeHomeDispatcher()
     }
 
     render() {
         return (
             <div className="t-home">
                 <h1>Welcome to Eunoia's ChatBot!</h1>
-                <input type="button">CLICK TO CHAT</input>
+                <input type="button" value="CLICK TO CHAT" />
             </div>
         )
     }
 }
 
 Home.propTypes = {
-    initializeHome: PropTypes.func,
+    initializeHomeDispatcher: PropTypes.func,
     uiState: PropTypes.object
 }
 
@@ -38,9 +38,9 @@ const mapStateToProps = createPropsSelector({
     uiState: globalSelectors.getHome
 })
 
-const mapDispatchToProps = {
-    initializeHome: initializeHome
-}
+const mapDispatchToProps = (dispatch) => ({
+    initializeHomeDispatcher: () => dispatch(initializeHome())
+})
 
 export default connect(
     mapStateToProps,

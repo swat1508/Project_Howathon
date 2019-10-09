@@ -28,14 +28,14 @@ class Router extends React.Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <Switch>
-                        <Route path="/">
-                            <Login />
-                        </Route>
                         <Route path="/login">
                             <Login />
                         </Route>
                         <Route path="/home">
                             <Home />
+                        </Route>
+                        <Route path="/">
+                            <Login />
                         </Route>
                     </Switch>
                 </BrowserRouter>

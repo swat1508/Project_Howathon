@@ -1,4 +1,4 @@
-import {pageMetaDataReceived, initializeApp} from '../../actions'
+import {initializeApp} from '../../actions'
 
 export const HOME_UI_STATE_RECEIVED = 'HOME_UI_STATE_RECEIVED'
 
@@ -7,15 +7,7 @@ export const updateHomeUIState = (payload) => ({type: HOME_UI_STATE_RECEIVED, pa
 export const initializeHome = () => (dispatch) => {
     return Promise.all([
         dispatch(initializeApp()),
-        dispatch(
-            pageMetaDataReceived({
-                pageMetaData: {
-                    title: 'Scaffold Home',
-                    description: 'Homepage for the Scaffold'
-                }
-            })
-        )
     ])
-        .then(() => ({statusCode: 200}))
-        .catch((err) => ({statusCode: err.statusCode || 500}))
+    .then(() => ({statusCode: 200}))
+    .catch((err) => ({statusCode: err.statusCode || 500}))
 }
