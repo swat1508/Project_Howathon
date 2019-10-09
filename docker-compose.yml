@@ -1,0 +1,37 @@
+version: '3'
+services:
+# server container
+  server:
+    # container_name: server-container
+    restart: always
+    build: ./server
+    ports:
+      - '5000'
+    labels:
+      - "traefik.frontend.rule=Host:localhost"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'
+    # volumes:
+    #   - '/Users/braanokh/Desktop/mongodb111:/data/db'
+  client:
+    container_name: client-container
+    restart: always
+    build: ./client
+    ports:
+      - '3000:3000'
+    links:
+      - server
+  reverse-proxy:
+    image: traefik:1.7
+    command: --api --docker
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      
+# docker-compose up --build -d --scale server=5

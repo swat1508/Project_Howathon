@@ -2,8 +2,11 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.login-hero-img {
+  background-image: url("./login_bg1.png");
+  height: 100vh;
+  width: 100vw;
+  filter: blur(3px);
 }
 
 .App-header {
@@ -17,6 +20,18 @@
   color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.btn-toolbar {
+  .btn {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.google-login-button {
+  position: fixed;
+  top: 50vh;
+  left: 30vw;
 }
