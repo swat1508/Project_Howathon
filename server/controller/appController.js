@@ -25,15 +25,16 @@ const appController = {
   },
 
   getConversationHistory: (req, res, next) => {
+    console.log('req.query.userId-------------------', req.params.userId);
     try {
-      messageModel.find({ 'message._id': req.query.userId }, (err, response) => {
-        if (err) {
-          throw err;
-        } else {
+      MessageModel.find({ createrUser: req.params.userId }).sort({date: 'asc'}).then((response) => {
+        // if (err) {
+        //   throw err;
+        // } else {
           res.set('Content-Type', 'application/json');
           res.status(200).send(response);
           return res;
-        }
+        // }
       });
     } catch (error) {
       next(error);
@@ -46,11 +47,28 @@ const appController = {
           messageData: req.body.message,
           date: new Date()
         });
-        messageModel.createrUser.push(req.body.userId)
+        messageModel.createrUser = (req.body.userId);
         messageModel.save((error, response) => {
             res.set('Content-Type', 'application/json');
             res.status(201).send(response);
         });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getUserByUserId: (req, res, next) => {
+    console.log('req.query.userId-------------------', req.params.userId);
+    try {
+      UserModel.findOne({ _id: req.params.userId }).then((response) => {
+        // if (err) {
+        //   throw err;
+        // } else {
+          res.set('Content-Type', 'application/json');
+          res.status(200).send(response);
+          return res;
+        // }
+      });
     } catch (error) {
       next(error);
     }
