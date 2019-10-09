@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import { requestApiData } from "../../store/actions";
-import ChatView from "../chat-view/chat-view.component";
 
 class Home extends React.Component {
   componentDidMount() {
@@ -13,12 +12,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        {Object.keys(this.props.data).length !== 0 ? (
-          <div>{JSON.stringify(this.props.data)}</div>
-        ) : (
-          <div>Loading...</div>
-        )}
-        <ChatView />
+        { Object.keys(this.props.data).length !== 0  ? <div>{JSON.stringify( this.props.data )}</div> : <div>Loading...</div> }
       </div>
     );
   }
@@ -29,7 +23,4 @@ const mapStateToProps = state => ({ data: state.data });
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ requestApiData }, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

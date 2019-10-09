@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./login.scss";
 
-import socketIOClient from "socket.io-client"
-import {withRouter} from 'react-router-dom'
-import firebase from 'firebase'
-import {firebaseConfig as config} from './../../../config'
+import socketIOClient from "socket.io-client";
+import { withRouter } from "react-router-dom";
+import firebase from "firebase";
+import { firebaseConfig as config } from "./../../../config";
 
-const firebaseApp = firebase.initializeApp(config) 
+const firebaseApp = firebase.initializeApp(config);
 class Login extends Component {
   constructor() {
     super();
@@ -26,11 +26,14 @@ class Login extends Component {
   }
 
   login() {
-    var provider = new firebase.auth.GoogleAuthProvider()
-    firebaseApp.auth().signInWithPopup(provider).then((user) => {
-      console.log("result aa gya =>", user) 
-      this.props.history.push('/home')
-    })
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebaseApp
+      .auth()
+      .signInWithPopup(provider)
+      .then(user => {
+        console.log("result aa gya =>", user);
+        this.props.history.push("/home");
+      });
   }
 
   render() {
@@ -39,15 +42,14 @@ class Login extends Component {
         <header className="Login-header">
           <div className="login-hero-img"></div>
           <div className="google-login-button">
-            <a
-              // href="https://backend-xt-fsd.herokuapp.com/users/auth/google"
-              className="button"
-            >    
-              <button className="loginBtn loginBtn--google" onClick={this.login.bind(this)}>
-                Login with Google
-              </button>     
-            </a>
-                    
+               
+            <button
+              className="loginBtn loginBtn--google"
+              onClick={this.login.bind(this)}
+            >
+              Login with Google
+            </button>
+                      
           </div>
         </header>
       </div>
@@ -55,4 +57,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login)
+export default withRouter(Login);
