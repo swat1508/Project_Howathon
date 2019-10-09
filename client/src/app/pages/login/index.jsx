@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./login.scss";
 
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -34,7 +36,7 @@ class Login extends Component {
       .auth()
       .signInWithPopup(provider)
       .then(user => {
-        console.log("result aa gya =>", user);
+        this.props.dispatchUserDetails(user)
         this.props.history.push("/home");
       });
   }
@@ -73,4 +75,16 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+Login.propTypes = {
+  dispatchUserDetails: PropTypes.func
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchUserDetails: (user) =>
+      dispatch(updateUserDetails(user))
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(Login))

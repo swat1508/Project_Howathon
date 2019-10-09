@@ -34,7 +34,7 @@ class Router extends React.Component {
                         <Route path="/home">
                             <Home />
                         </Route>
-                        <Route path="/">
+                        <Route exact path="/">
                             <Login />
                         </Route>
                     </Switch>

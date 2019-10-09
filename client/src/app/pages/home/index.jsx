@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {createPropsSelector} from 'reselect-immutable-helpers'
 import PropTypes from 'prop-types'
-
+import './base.scss'
 import {initializeHome} from './actions'
 import * as globalSelectors from '../../selectors'
 import ChatView from '../../components/chat-view/chat-view.component'
@@ -13,16 +13,16 @@ class Home extends React.Component {
         this.pageType = 'home'
     }
 
-    componentDidMount() {
-        const {initializeHomeDispatcher} = this.props
-        // initializeHomeDispatcher()
-    }
+    // componentDidMount() {
+    //     const {initializeHomeDispatcher} = this.props
+    //     // initializeHomeDispatcher()
+    // }
 
     render() {
         return (
             <div className="t-home">
-                <h1>Welcome to Eunoia's ChatBot!</h1>
-                <input type="button" value="CLICK TO CHAT" />
+                <div className="hd_container"><p className="cb_header">Welcome to Eunoia's ChatBot!</p></div>
+                {/* <input type="button" value="CLICK TO CHAT" /> */}
                 < ChatView/>
             </div>
         )

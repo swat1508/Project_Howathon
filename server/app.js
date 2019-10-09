@@ -4,14 +4,13 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override'); //need for PUT/Edit request
+import {Recast} from './recastOps'
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = YAML.load('./swagger.yaml');
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-require('./models/UserModel');
-const user_model= mongoose.model('user');
 const appRouter = require('./routes/appRouter');
 
 const {
@@ -60,6 +59,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post('/triggerRecastOps', (req, res) => {
+  const recastApi = new Recast()
+  recastApi.getAndCallProcessIntent(req.body)
+})
+
 app.use('/api', appRouter);
 
 //Database Config
@@ -68,8 +72,8 @@ const port =  databasePort;
 
 mongoose.connect(db.mongoURI, {useNewUrlParser: true }).then(() => {
   console.log('Mongo DB is Connected ...');
-  // app.listen(port , () => {
-  //   console.log(`Server started on port ${port} `);
-  // });
+  app.listen(port , () => {
+    console.log(`Server started on port ${port} `);
+  });
 }).catch(err => console.log(err));
       

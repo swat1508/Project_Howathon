@@ -1,38 +1,60 @@
-import React from "react";
-import RecastApi from "../../../recast-ai";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import "./Message-input.styles.scss";
+import React from 'react';
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import {updateConversation} from './../../pages/home/actions'
+import './Message-input.styles.scss';
+import axios from 'axios'
 
-let recast = new RecastApi();
+const MessageInput = (props) => {
+    return (
+        <div className="message-input">
+            <div className="wrap">
+                <input type="text" placeholder="Write your message..." onKeyPress={(event) => updateChatHistory(event, props.updateConversations)}></input>
+                <button className="submit">
+                    <FontAwesomeIcon icon={faPaperPlane} />
+                    <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    )
+}
 
-const callRecast = () => {
-  recast
-    .parseData()
-    .then(function(data) {
-      // window.confirm(data);
-    })
-    .catch(function(error) {
-      window.confirm("Error While Executing the given command", error);
-    });
-};
+const updateChatHistory = (event, updateConversations) => {
+    if (event.which === 13) {
+        const input = event.target.value
+        event.target.value = ''
+        const message = {
+            message: input,
+            bot: false,
+            timeStamp: new Date().getTime()
+        }
+        updateConversations(message)
+        const host = window.location.hostname
+        const port = 4001
+        console.log({input})
+        axios
+            .post(`http://${host}:${port}/triggerRecastOps`, message)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+}
 
-const MessageInput = () => {
-  return (
-    <div className="message-input">
-      <div className="wrap">
-        <input
-          type="text"
-          placeholder="Write your message..."
-          id="searchbox"
-        ></input>
-        <button className="submitQuery" onClick={callRecast}>
-          <FontAwesomeIcon icon={faPaperPlane} />
-          <i className="fa fa-paper-plane" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-  );
-};
+MessageInput.propTypes = {
+    updateConversations: PropTypes.func
+}
 
-export default MessageInput;
+const mapDispatchToProps = (dispatch) => ({
+    updateConversations: (message) =>
+        dispatch(updateConversation(message))
+})
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(MessageInput)

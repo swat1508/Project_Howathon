@@ -1,8 +1,6 @@
 import {initializeApp} from '../../actions'
 
-export const HOME_UI_STATE_RECEIVED = 'HOME_UI_STATE_RECEIVED'
-
-export const updateHomeUIState = (payload) => ({type: HOME_UI_STATE_RECEIVED, payload})
+export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION'
 
 export const initializeHome = () => (dispatch) => {
     return Promise.all([
@@ -11,3 +9,10 @@ export const initializeHome = () => (dispatch) => {
     .then(() => ({statusCode: 200}))
     .catch((err) => ({statusCode: err.statusCode || 500}))
 }
+
+export const updateConversation = (message) => {
+    return {
+        type: UPDATE_CONVERSATION,
+        payload: {conversations: [message]}
+    }
+} 
