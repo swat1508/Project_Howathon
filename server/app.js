@@ -103,7 +103,21 @@ app.get('/',(req,res) => {
 });
 
 
-  const port =  5000;
+  
+
+
+
+  //Database Config
+const db = require('./config/database');
+const port =  5000;
+
+//connect to mongoose
+/*Sec6-Lec35
+mongoose.connect('mongodb://localhost/vidjot-dev',{    */
+mongoose.connect(db.mongoURI,{useNewUrlParser: true }).then(() => 
+{
+
+  console.log('Mongo DB is Connected ...');
   app.listen(port , () => {
     console.log(`Server started on port ${port} `);  
     /*  back tick - used for template string/template literal and basically 
@@ -111,6 +125,7 @@ app.get('/',(req,res) => {
      The above line is equivalent to 
     console.log('Server started on port ' + port);
      */
-  });  
-
+  });
+})
+  .catch(err => console.log(err));
       
