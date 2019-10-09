@@ -5,11 +5,12 @@ let h = new Headers();
 h.append("Content-Type", "application/json");
 h.append("Authorization", token);
 
-let localvalue = "";
-
+let possiblePiiKeywords = ["credit_card_expiry", "credit_card_number"];
+let parsedData = "";
 export default class RecastApi {
   parseData() {
-    const queryCommand = document.getElementById("searchbox").value;
+    let queryCommand = document.getElementById("searchbox").value;
+    let outputCommand = queryCommand;
     return fetch(uri + queryCommand, {
       method: "post",
       headers: h
@@ -20,30 +21,35 @@ export default class RecastApi {
           .then(response => {
             console.log("response", response);
             let slug = response["results"]["intents"][0]["slug"];
-            console.log("slug:", slug);
+            //console.log("slug:", slug);
             let userData = response["results"]["entities"];
             console.log("userData:", userData);
-            // let possiblePiiData = userData.slice(1, userData.length);
-            // if (slug == "piiparse") {
-            //   const parsedData = console.log(
-            //     "possiblePiiData:",
-            //     possiblePiiData
-            //   );
-            // let storeState = store.getState();
-            // let objectItems = storeState.items;
-            // if (objectItems.length > 0) {
-            //   let previousObjectId =
-            //     storeState.items[objectItems.length - 1].id;
-            //   createRepoObj.id = Number(previousObjectId) + 1;
-            // } else {
-            //   createRepoObj.id = 1;
-            // }
 
-            // store.dispatch({
-            //   type: "CREATE_REPO",
-            //   item: createRepoObj
-            // });
-            //}
+            if (slug == "piiparse") {
+              for (let data in userData) {
+                console.log("data:", data);
+                if (possiblePiiKeywords.indexOf(data) > -1) {
+                  console.log(data, "is possiblePiiKeywords");
+                  let dataValue =
+                    response["results"]["entities"][data][0]["value"];
+                  console.log("data value:", dataValue);
+                  if (data == "credit_card_expiry") {
+                    outputCommand = outputCommand.replace(
+                      dataValue,
+                      "<credit_card_expiry>"
+                    );
+                    console.log("outputCommand", outputCommand);
+                  } else if (data == "credit_card_number") {
+                    outputCommand = queryCommand.replace(
+                      dataValue,
+                      "<credit_card_number>"
+                    );
+
+                    console.log("outputCommand", outputCommand);
+                  }
+                }
+              }
+            }
           })
           .catch(function(err) {
             console.log(
