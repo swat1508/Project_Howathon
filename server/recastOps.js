@@ -28,13 +28,14 @@ class Recast {
             data: text,
         })
         .then((response) => {
-            response.json().then((body) => {
+            return response.json().then((body) => {
                 const recastResponseProcesser = new RecastApi()
                 const processedResponse = recastResponseProcesser.parseData(body, request.message)
                 appController.createMessage({body: {
-                    message: processedResponse,
+                    message: processedResponse.outputCommand,
                     userId: request.id
                 }})
+                return processedResponse.slug
             });
         })
         .catch((error) => {

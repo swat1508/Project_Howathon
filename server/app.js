@@ -53,10 +53,10 @@ app.use(cors());
 
 app.post('/triggerRecastOps', (req, res) => {
   const recastApi = new Recast();
-  recastApi.getAndCallProcessIntent(req.body).then((res) => {
-    console.log('Returned : ', res);
+  return recastApi.getAndCallProcessIntent(req.body).then((response) => {
+    console.log('Returned : ', response); 
     res.status(200);
-    res.json({success: true});
+    res.json({data: response});
   });
 });
 

@@ -20,6 +20,7 @@ class ChatView extends Component {
                     <ul>
                         {
                             this.props.messages && this.props.messages.map((message) => {
+                                console.log('asjdfaslfdasdlfj =============== ', message)
                                 const {id, ...otherProps} = message;
                                 return (<Message key={id} {...otherProps} />)
                             })

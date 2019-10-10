@@ -7,9 +7,9 @@ import chatbot from '../../../assets/chat-bubble.png';
 
 const Message = (message) => {
     return (
-        <li className={ message.bot ? 'sent' : 'replies' }>
-            <img src={ message.bot ? chatbot : man } alt=""></img>
-            <p>{message.message}</p>
+        <li className={ message.isBot ? 'sent' : 'replies' }>
+            <img src={ message.isBot ? chatbot : man } alt=""></img>
+            <p>{message.message.message}</p>
         </li>
     )
 }

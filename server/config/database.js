@@ -11,7 +11,7 @@ if (process.env.NODE_ENV == 'production') {
   module.exports = {mongoURI: mongoDbUriDocker};
 } else {
   console.log('NON_PROD', process.env.NODE_ENV);
-  module.exports = { mongoURI: localhostDbUri };
+  // module.exports = { mongoURI: localhostDbUri };
   // For docker
-  // module.exports = {mongoURI: mongoDbUriDocker};
+  module.exports = {mongoURI: mongoDbUriDocker};
 }

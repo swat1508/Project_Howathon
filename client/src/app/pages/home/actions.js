@@ -10,9 +10,9 @@ export const initializeHome = () => (dispatch) => {
     .catch((err) => ({statusCode: err.statusCode || 500}))
 }
 
-export const updateConversation = (message) => {
+export const updateConversation = (message, isBot) => {
     return {
         type: UPDATE_CONVERSATION,
-        payload: {conversations: [message]}
+        payload: {conversations: [{message, isBot}]}
     }
 } 

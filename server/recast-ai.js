@@ -12,6 +12,6 @@ export default class RecastApi {
       }
       console.log("outputCommand", outputCommand);
     }
-    return outputCommand
+    return {slug, outputCommand}
   }
 }

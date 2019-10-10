@@ -8,6 +8,7 @@ import {updateConversation} from './../../pages/home/actions'
 import './Message-input.styles.scss';
 import axios from 'axios'
 import {getUser} from '../../pages/login/selectors'
+import { serverUrl } from '../../../constant/constant';
 
 const MessageInput = (props) => {
     console.log('============', props.userInfo);
@@ -28,23 +29,28 @@ const updateChatHistory = (event, updateConversations, userInfo) => {
     if (event.which === 13) {
         const input = event.target.value
         event.target.value = ''
-        const message = {
+        const inputMessage = {
             message: input,
-            bot: false,
             timeStamp: new Date().getTime(),
             userId: userInfo && userInfo.id || (localStorage.getItem('userId'))
         }
-        console.log(message)
-        updateConversations(message)
-        const host = window.location.hostname
-        const port = 4001
+        let botMessage = {
+            timeStamp: new Date().getTime()
+        }
+        console.log(inputMessage)
+        updateConversations(inputMessage, false)
         axios
-            .post(`http://${host}:${port}/triggerRecastOps`, message)
+            .post(`${serverUrl}/triggerRecastOps`, inputMessage)
             .then((res) => {
-                console.log(res.data)
+                if (res.data && res.data.data && res.data.data !== "") {
+                    botMessage.message = "Intent identified as: " + (res.data && res.data.data)
+                } else {
+                    botMessage.message = "I'm not sure how to help you with this, you may try to search Google!"
+                }
+                updateConversations(botMessage, true)
             })
             .catch((err) => {
-                console.log(err)
+                updateConversations("Something went wrong, please try again!", true)
             })
     }
 }
@@ -59,8 +65,8 @@ const mapStateToProps = createPropsSelector({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    updateConversations: (message) =>
-        dispatch(updateConversation(message))
+    updateConversations: (message, isBot) =>
+        dispatch(updateConversation(message, isBot))
 })
 
 export default connect(
