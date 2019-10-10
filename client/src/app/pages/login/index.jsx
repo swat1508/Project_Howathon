@@ -44,6 +44,7 @@ class Login extends Component {
           let returnedUser = googleResponse.user;
           window.localStorage.setItem('token', res.data.token);
           localStorage.setItem('userId', res.data.id);
+          localStorage.setItem('userName', returnedUser.displayName);
           this.props.dispatchUserDetails(
             {
               email: returnedUser.email,
