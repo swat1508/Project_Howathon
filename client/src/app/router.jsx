@@ -41,7 +41,7 @@ class Router extends React.Component {
                             )}/>
                         <Route exact path="/" render={() => (
                             window.localStorage.getItem('token') ? (
-                                <Redirect to="/"/>
+                                <Redirect to="/home"/>
                             ) : (
                                 <Login />
                             )

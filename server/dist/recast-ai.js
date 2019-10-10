@@ -16,7 +16,7 @@ var RecastApi = function () {
   _createClass(RecastApi, [{
     key: "parseData",
     value: function parseData(response, outputCommand) {
-      var slug = response["results"]["intents"][0]["slug"];
+      var slug = response["results"] && response["results"]["intents"] && response["results"]["intents"][0] && response["results"]["intents"][0]["slug"];
       var userData = response["results"]["entities"];
       var possiblePiiKeywords = ["credit_card_expiry", "credit_card_number"];
       if (slug == "piiparse") {
@@ -28,7 +28,7 @@ var RecastApi = function () {
         }
         console.log("outputCommand", outputCommand);
       }
-      return outputCommand;
+      return { slug: slug, outputCommand: outputCommand };
     }
   }]);
 

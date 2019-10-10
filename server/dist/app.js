@@ -1,12 +1,18 @@
 'use strict';
 
+var _recastOps = require('./recastOps');
+
+var _recastOps2 = _interopRequireDefault(_recastOps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var express = require('express');
 var exphbs = require('express-handlebars'); //exphbs - expresshandlebars
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override'); //need for PUT/Edit request
-var recast = require('./recastOps');
+
 var YAML = require('yamljs');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = YAML.load('./swagger.yaml');
@@ -53,8 +59,12 @@ app.use(methodOverride('_method'));
 app.use(cors());
 
 app.post('/triggerRecastOps', function (req, res) {
-  var recastApi = new recast.Recast();
-  recastApi.getAndCallProcessIntent(req.body);
+  var recastApi = new _recastOps2.default();
+  return recastApi.getAndCallProcessIntent(req.body).then(function (response) {
+    console.log('Returned : ', response);
+    res.status(200);
+    res.json({ data: response });
+  });
 });
 
 app.use('/api', isLoggedin, appRouter);
