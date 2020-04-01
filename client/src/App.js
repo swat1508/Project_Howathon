@@ -1,29 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { serverUrl } from './constant/constant';
+import "./App.scss";
+import socketIOClient from "socket.io-client";
+import Router from "./app/router";
+import configureStore from './app/store';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      response: false,
+      endpoint: serverUrl
+    };
+  }
+
+  componentDidMount() {
+    const { endpoint } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.on("FromAPI", data => {
+      // this.setState({ response: data });
+      console.log("Socker API : ", data);
+    });
+  }
+
   render() {
-    return (
-      <div className="App">
-             <header className="App-header">
-                
-                <h1 className="App-title">Welcome to ChatApp by EUNOIA </h1>
-            </header>
- 
-<div className="googleAuthFormCss">
-      Please Sign in below
-
-      <div className="google-login-button">
-          <a href="https://backend-xt-fsd.herokuapp.com/users/auth/google" class="button">
-            <button class="loginBtn loginBtn--google">Login with Google</button>
-            </a>
-        </div>
-
-
-      </div>
-      </div>
-    );
+    const store = configureStore();
+    return <Router store={store} />;
   }
 }
 

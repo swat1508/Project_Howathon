@@ -1,0 +1,45 @@
+@import '../../../styles/_variables';
+
+.message-input {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+
+    .wrap {
+        position: relative;
+
+        input {
+            font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
+            float: left;
+            border: none;
+            width: calc(100% - 50px);
+            padding: 11px 32px 10px 8px;
+            font-size: 0.8em;
+            color: $color-grey-6;
+            padding: 15px 32px 16px 8px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        button {
+            float: right;
+            border: none;
+            width: 50px;
+            padding: 12px 0;
+            cursor: pointer;
+            background: $color-grey-6;
+            color: $color-white-5;
+
+            &:hover {
+                background: $color-grey-5;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
